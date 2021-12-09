@@ -1,15 +1,19 @@
 import * as cdk from '@aws-cdk/core';
-// import * as sqs from '@aws-cdk/aws-sqs';
+import * as dynamodb from '@aws-cdk/aws-dynamodb';
 
 export class StarterAppStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    // The code that defines your stack goes here
-
-    // example resource
-    // const queue = new sqs.Queue(this, 'StarterAppQueue', {
-    //   visibilityTimeout: cdk.Duration.seconds(300)
-    // });
+    new dynamodb.Table(this, 'StarterAppTable', {
+      partitionKey: { 
+        name: 'userId', 
+        type: dynamodb.AttributeType.STRING 
+      },
+      sortKey: {
+        name: 'noteId',
+        type: dynamodb.AttributeType.STRING
+      },
+    });
   }
 }
